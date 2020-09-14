@@ -1,11 +1,3 @@
-# Define your item pipelines here
-#
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-
-
-# useful for handling different item types with a single interface
-from itemadapter import ItemAdapter
 from movie.models import Movie
 
 def clean_title(param):
@@ -30,7 +22,6 @@ def clean_approval_percentage(param):
     return param.strip().replace('%', '')
 
 
-
 class CrawlingPipeline(object):
     def process_item(self, item, spider):
         title = clean_title(item['title'])
@@ -41,12 +32,12 @@ class CrawlingPipeline(object):
         approval_percentage = clean_approval_percentage(item['approval_percentage'])
 
         Movie.objects.create(
-            title = title,
+            title=title,
             critics_consensus=critics_consensus,
             average_grade=average_grade,
             poster=poster,
             amount_reviews=amount_reviews,
             approval_percentage=approval_percentage,
         )
-        
+
         return item

@@ -1,3 +1,16 @@
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".."))
+os.environ['DJANGO_SETTINGS_MODULE'] = 'django_scrapy.settings'
+
+import django
+django.setup()
+
+from django_scrapy.settings import MEDIA_ROOT
+
+IMAGES_STORE = MEDIA_ROOT
+
+
 # Scrapy settings for crawling project
 #
 # For simplicity, this file contains only settings considered important or
@@ -87,16 +100,3 @@ ITEM_PIPELINES = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
-
-
-import os
-import sys
-sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".."))
-os.environ['DJANGO_SETTINGS_MODULE'] = 'django_scrapy.settings'
-import django
-django.setup()
-
-from django_scrapy.settings import MEDIA_ROOT
-
-IMAGES_STORE = MEDIA_ROOT
-
