@@ -6,9 +6,6 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'django_scrapy.settings'
 import django
 django.setup()
 
-from django_scrapy.settings import MEDIA_ROOT
-
-IMAGES_STORE = MEDIA_ROOT
 
 
 # Scrapy settings for crawling project
@@ -76,7 +73,7 @@ DOWNLOAD_DELAY = 3
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'scrapy.pipelines.images.ImagesPipeline': 100,
+    'crawling.pipelines.CustomImagePipeline': 1,
     'crawling.pipelines.CrawlingPipeline': 100,
 }
 
