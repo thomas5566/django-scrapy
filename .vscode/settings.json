@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "ggg",
+            "database": "D:\\Users\\Administrator\\gb5566\\thomas_Django\\thomasDj\\db.sqlite3"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

@@ -1,11 +1,12 @@
+import django
 import os
 import sys
-sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".."))
+
+sys.path.append(os.path.join(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))), ".."))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'django_scrapy.settings'
 
-import django
 django.setup()
-
 
 
 # Scrapy settings for crawling project
@@ -24,7 +25,7 @@ NEWSPIDER_MODULE = 'crawling.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'crawling (+http://www.yourdomain.com)'
+USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -47,34 +48,50 @@ DOWNLOAD_DELAY = 3
 #TELNETCONSOLE_ENABLED = False
 
 # Override the default request headers:
-#DEFAULT_REQUEST_HEADERS = {
+# DEFAULT_REQUEST_HEADERS = {
 #   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
 #   'Accept-Language': 'en',
-#}
+# }
 
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
+# SPIDER_MIDDLEWARES = {
 #    'crawling.middlewares.CrawlingSpiderMiddleware': 543,
-#}
+# }
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'crawling.middlewares.CrawlingDownloaderMiddleware': 543,
-#}
+# DOWNLOADER_MIDDLEWARES = {
+#     'crawling.middlewares.CrawlingDownloaderMiddleware': 543,
+#     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+#     'scrapy.downloadermiddlewares.retry.RetryMiddleware': None,
+#     'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 400,
+#     'scrapy_fake_useragent.middleware.RetryUserAgentMiddleware': 401,
+# }
+
+# FAKEUSERAGENT_PROVIDERS = [
+#     # this is the first provider we'll try
+#     'scrapy_fake_useragent.providers.FakeUserAgentProvider',
+#     # if FakeUserAgentProvider fails, we'll use faker to generate a user-agent string for us
+#     'scrapy_fake_useragent.providers.FakerProvider',
+#     # fall back to USER_AGENT value
+#     'scrapy_fake_useragent.providers.FixedUserAgentProvider',
+# ]
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
-#EXTENSIONS = {
+# EXTENSIONS = {
 #    'scrapy.extensions.telnet.TelnetConsole': None,
-#}
+# }
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'crawling.pipelines.CustomImagePipeline': 1,
     'crawling.pipelines.CrawlingPipeline': 100,
+    'crawling.pipelines.CustomImagePipeline': 200,
+    'crawling.pipelines.DeleteNullTitlePipeline': 300,
+    'crawling.pipelines.DuplicatesTitlePipeline': 400,
+
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

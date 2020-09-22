@@ -12,18 +12,34 @@
     <title>Hello, world!</title>
   </head>
   <body>
+    <form method="POST">
+      {% csrf_token %}
+      Name : {{ movieFilter.from.title }}
+      Date : {{ movieFilter.from.date }}
+      Reviews : {{ movieFilter.from.amount_reviews }}
+      <input type="submit" class="btn btn-primary" value="Search" />
+    </form>
     <div>
-      {% for item in movie %}
+      {% comment %}
+        <select name="date_categories" class="filter-selectbox">
+        {% for item in movie %}
+          <option value="{{ item.date }}">{{ item.date }}</option>
+        {% endfor %}
+        </select>
+      {% endcomment %}
 
+      {% for item in movie %}
       <ul class="list-unstyled">
+        <h1 class="mt-0 mb-1">Title: {{ item.title }}</h1>
         <li class="media">
-          <img src="{{ item.poster.url }}" class="mr-3" alt="...">
           <div class="media-body">
-            <h1 class="mt-0 mb-1">Title: {{ item.title }}</h1>
+            <img src="{{ item.poster.url }}" class="mr-3" alt="{{ item.title }}">
+          </div>
+          <div>
+            <h4>Date: {{ item.date }}</h4>
             <h4>Consensus: {{ item.critics_consensus }}</h4>
             <h4>Amount_reviews: {{ item.amount_reviews }}</h4>
             <h4>Percentage: {{ item.approval_percentage }}</h4>
-            <h4>Date: {{ item.date }}</h4>
             {% if item.average_grade %}
             <h4>Average: {{ item.average_grade }}</h4>
             {% endif %}
